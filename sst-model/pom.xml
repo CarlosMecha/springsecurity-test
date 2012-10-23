@@ -1,133 +1,336 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    
-	<modelVersion>4.0.0</modelVersion>
-    
-	<artifactId>springsecurity-test-model</artifactId>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-	<packaging>jar</packaging>
-    
-	<name>Spring Security Test model</name>
-	
-	<description>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>springsecurity-test-model</artifactId>
+
+    <packaging>jar</packaging>
+
+    <name>Spring Security Test model</name>
+
+    <description>
 		<![CDATA[The model component. It uses EclipseLink and JPA2.0]]>
 	</description>
-    
+
     <parent>
         <groupId>org.carlosmecha.test</groupId>
         <artifactId>springsecurity-test</artifactId>
         <version>0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-	 
-	<dependencies>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.6.0.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>4.1.0.Final</version>
-		</dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${spring.framework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${spring.framework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${spring.framework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.2.2</version>
-		</dependency>		
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.3.156</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-		</dependency>
-	</dependencies>
 
-	<build>
+    <properties>
+        <sst.test.db.url>jdbc:postgresql://${sst.test.db.host}:${sst.test.db.port}</sst.test.db.url>
+    </properties>
 
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>${java.version.source}</source>
-					<target>${java.version.target}</target>
-				</configuration>
-			</plugin>		 
-		</plugins>
-	</build>
+    <!-- Eclipselink repositories -->
+    <repositories>
+        <repository>
+            <id>eclipselink</id>
+            <url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
+        </repository>
+    </repositories>
 
- <!-- 	<pluginRepositories>
-		<pluginRepository>
-			<id>Codehaus</id>
-			<url>http://repository.codehaus.org/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-	<repositories>
-		<repository>
-			<id>org.jboss.repository.releases</id>
-			<name>JBoss Maven Release Repository</name>
-			<url>https://repository.jboss.org/nexus/content/repositories/releases</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<distributionManagement>
-		<downloadUrl>http://www.springframework.org/download</downloadUrl>
-		<site>
-			<id>staging</id>
-			<url>file:///${user.dir}/target/staging/org.springframework.batch.archetype/${pom.artifactId}</url>
-		</site>
-		<repository>
-			<id>spring-release</id>
-			<name>Spring Release Repository</name>
-			<url>file:///${user.dir}/target/staging/release</url>
-		</repository>
-		<snapshotRepository>
-			<id>spring-snapshot</id>
-			<name>Spring Snapshot Repository</name>
-			<url>file:///${user.dir}/target/staging/snapshot</url>
-		</snapshotRepository>
-	</distributionManagement> -->
+    <dependencies>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
+
+        <!-- Persistence -->
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.0-801.jdbc4</version>
+        </dependency>
+
+        <!-- DataSource -->
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
+        <!-- Logger -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+
+        <!-- Spring Agent -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-instrument</artifactId>
+            <version>${spring.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <defaultGoal>install</defaultGoal>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+                <filtering>true</filtering>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>false</filtering>
+            </testResource>
+        </testResources>
+
+        <pluginManagement>
+            <plugins>
+                <!-- Plugin execution not covered... quick fix -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>sql-maven-plugin</artifactId>
+                                        <versionRange>[1.0,)</versionRange>
+                                        <goals>
+                                            <goal>execute</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>${java.version.source}</source>
+                    <target>${java.version.target}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.3</version>
+                <configuration>
+                    <argLine>-javaagent:${settings.localRepository}/org/springframework/spring-instrument/${spring.framework.version}/spring-instrument-${spring.framework.version}.jar</argLine>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <runOrder>alphabetical</runOrder>
+                    <disableXmlReport>true</disableXmlReport>
+                </configuration>
+            </plugin>
+            <!-- Generate *-sources.jar files for all modules -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Generate *-javadoc.jar files for all modules -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.8.1</version>
+                <configuration>
+                    <excludePackageNames>javax.persistence.*;org.apache.*;org.springframework.*;org.eclipselink.*</excludePackageNames>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadoc</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Create test database -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.5</version>
+
+                <configuration>
+                    <autocommit>true</autocommit>
+                    <driver>org.postgresql.Driver</driver>
+                    <skip>${maven.test.skip}</skip>
+                    <url>${sst.test.db.url}/${sst.test.db}</url>
+                    <settingsKey>${sst.test.db.credentials}</settingsKey>
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>9.0-801.jdbc4</version>
+                    </dependency>
+                </dependencies>
+
+                <executions>
+                    <execution>
+                        <id>drop-database-if-exists</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>${sst.test.db.url}/${sst.test.admin.db}</url>
+                            <sqlCommand>
+                                DROP DATABASE IF EXISTS
+                                "${sst.test.db}"
+                            </sqlCommand>
+                            <onError>continue</onError>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>create-database</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>${sst.test.db.url}/${sst.test.admin.db}</url>
+                            <sqlCommand>
+                                CREATE DATABASE "${sst.test.db}"
+                                WITH OWNER = ${sst.db.user}
+                                ENCODING =
+                                'UTF8'
+                                TABLESPACE = pg_default
+                                CONNECTION
+                                LIMIT = -1
+                            </sqlCommand>
+                            <onError>abort</onError>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>create-schema</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <sqlCommand>
+                                CREATE SCHEMA
+                                "sst"
+                                AUTHORIZATION
+                                ${sst.db.user}
+                            </sqlCommand>
+                            <onError>abort</onError>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>inject-tables</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <autocommit>false</autocommit>
+                            <srcFiles>
+                                <srcFile>src/main/sql/sst.sql</srcFile>
+                            </srcFiles>
+                            <onError>abort</onError>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <!-- <pluginRepositories> <pluginRepository> <id>Codehaus</id> <url>http://repository.codehaus.org/</url> 
+        <snapshots> <enabled>false</enabled> </snapshots> </pluginRepository> </pluginRepositories> 
+        <repositories> <repository> <id>org.jboss.repository.releases</id> <name>JBoss 
+        Maven Release Repository</name> <url>https://repository.jboss.org/nexus/content/repositories/releases</url> 
+        <snapshots> <enabled>false</enabled> </snapshots> </repository> </repositories> 
+        <distributionManagement> <downloadUrl>http://www.springframework.org/download</downloadUrl> 
+        <site> <id>staging</id> <url>file:///${user.dir}/target/staging/org.springframework.batch.archetype/${pom.artifactId}</url> 
+        </site> <repository> <id>spring-release</id> <name>Spring Release Repository</name> 
+        <url>file:///${user.dir}/target/staging/release</url> </repository> <snapshotRepository> 
+        <id>spring-snapshot</id> <name>Spring Snapshot Repository</name> <url>file:///${user.dir}/target/staging/snapshot</url> 
+        </snapshotRepository> </distributionManagement> -->
 </project>
