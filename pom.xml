@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.carlosmecha.test</groupId>
+    <artifactId>springsecurity-test</artifactId>
+    <version>0.1</version>
+    <packaging>pom</packaging>
+    
+    <name>Spring Security Test</name>
+    <url>https://github.com/CarlosMecha/springsecurity-test</url>
+    
+    <description>
+        <![CDATA[A minimal project that serves a wish list service.]]>
+    </description>
+
+    <modules>
+        <module>sst-model</module>
+        <module>sst-web</module>
+    </modules>
+
+    <properties>
+        <spring.framework.version>3.1.0.RELEASE</spring.framework.version>
+        <java.version.source>1.6</java.version.source>
+        <java.version.target>1.6</java.version.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>  
+        <maven.test.failure.ignore>false</maven.test.failure.ignore>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.14</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.7</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.framework.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.framework.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+        </plugins>
+    </build> 
+</project>
