@@ -1,5 +1,6 @@
 package org.carlosmecha.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.util.Date;
@@ -9,6 +10,8 @@ import javax.persistence.PersistenceContext;
 
 import org.carlosmecha.test.springsecurity.model.user.User;
 import org.carlosmecha.test.springsecurity.model.user.UserEntity;
+import org.carlosmecha.test.springsecurity.model.wish.Wish;
+import org.carlosmecha.test.springsecurity.model.wish.WishEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -49,56 +52,76 @@ public class AWishPersistenceTest {
 
     @Test
     @Transactional
-    public void testSaveOrderWithItems() throws Exception {
-        /*
-         * final Order order = new Order();
-         * order.getItems().add(new Item());
-         * entityManager.persist(order);
-         * entityManager.flush();
-         * assertNotNull(order.getId());
-         */
+    public void testSaveUserWithWishes() throws Exception {
+
+        final User user = new UserEntity("Agapito");
+        user.setCreationDate(new Date());
+        user.setPassword("Pass");
+
+        final Wish wish = new WishEntity(user);
+        wish.setWish("Learn Spring...");
+
+        user.getWishes().add(wish);
+
+        entityManager.persist(user);
+        entityManager.flush();
+
+        assertFalse((user.getId() == 0));
+        assertFalse((wish.getId() == 0));
+
     }
 
     @Test
     @Transactional
     public void testSaveAndGet() throws Exception {
-        /*
-         * final Order order = new Order();
-         * order.getItems().add(new Item());
-         * entityManager.persist(order);
-         * entityManager.flush();
-         */
-        // Otherwise the query returns the existing order (and we didn't set the
-        // parent in the item)...
-        /*
-         * entityManager.clear();
-         * final Order other = entityManager.find(Order.class, order.getId());
-         * assertEquals(1, other.getItems().size());
-         * assertEquals(other, other.getItems().iterator().next().getOrder());
-         */
+        final User user = new UserEntity("Agapito");
+        user.setCreationDate(new Date());
+        user.setPassword("Pass");
+
+        final Wish wish = new WishEntity(user);
+        wish.setWish("Learn Spring...");
+
+        user.getWishes().add(wish);
+
+        entityManager.persist(user);
+        entityManager.flush();
+
+        // Otherwise the query returns the existing user.
+
+        entityManager.clear();
+        final User other = entityManager.find(UserEntity.class, user.getId());
+        assertEquals(1, other.getWishes().size());
+        assertEquals(other, other.getWishes().iterator().next().getUser());
     }
 
     @Test
     @Transactional
     public void testSaveAndFind() throws Exception {
-        /*
-         * final Order order = new Order();
-         * final Item item = new Item();
-         * item.setProduct("foo");
-         * order.getItems().add(item);
-         * entityManager.persist(order);
-         * entityManager.flush();
-         */
-        // Otherwise the query returns the existing order (and we didn't set the
-        // parent in the item)...
-        /*
-         * entityManager.clear();
-         * final Order other = (Order) entityManager.createQuery(
-         * "select o from Order o join o.items i where i.product=:product").setParameter(
-         * "product", "foo").getSingleResult();
-         * assertEquals(1, other.getItems().size());
-         * assertEquals(other, other.getItems().iterator().next().getOrder());
-         */
+        final User user = new UserEntity("Agapito");
+        user.setCreationDate(new Date());
+        user.setPassword("Pass");
+
+        final Wish wish = new WishEntity(user);
+        wish.setWish("Learn Spring...");
+
+        user.getWishes().add(wish);
+
+        entityManager.persist(user);
+        entityManager.flush();
+
+        // Otherwise the query returns the existing user.
+
+        entityManager.clear();
+        final User other = entityManager
+                .createNamedQuery("UserEntity.FIND_BY_USERNAME", User.class).setParameter(
+                    "username", "Agapito").getSingleResult();
+        assertEquals(1, other.getWishes().size());
+        assertEquals(other, other.getWishes().iterator().next().getUser());
+
+        final Wish otherWish = entityManager.createNamedQuery("WishEntity.FIND_BY_ID", Wish.class)
+                .setParameter("id", other.getWishes().iterator().next().getId()).getSingleResult();
+        assertEquals(other.getWishes().iterator().next(), otherWish);
+
     }
 
 }

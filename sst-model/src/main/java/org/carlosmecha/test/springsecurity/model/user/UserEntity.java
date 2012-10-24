@@ -69,7 +69,7 @@ public class UserEntity implements User {
     @Column(name = "creation_date")
     private Calendar creationDate;
 
-    @OneToMany(cascade = { CascadeType.DETACH },
+    @OneToMany(cascade = CascadeType.ALL,
         fetch = FetchType.LAZY,
         mappedBy = "user",
         targetEntity = WishEntity.class)

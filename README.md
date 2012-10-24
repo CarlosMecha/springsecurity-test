@@ -9,6 +9,8 @@ or remove them.
 
 ===================
 
+More information in https://github.com/CarlosMecha/springsecurity-test/wiki
+
 Version 0.1
 
 - There is not functionality to create, edir or modify users by web. They will be added to the
