@@ -75,6 +75,12 @@ public class UserEntity implements User {
         targetEntity = WishEntity.class)
     private final List<Wish> wishes = new ArrayList<Wish>();
 
+    @OneToMany(cascade = CascadeType.ALL,
+        fetch = FetchType.LAZY,
+        mappedBy = "user",
+        targetEntity = RoleEntity.class)
+    private final List<Role> roles = new ArrayList<Role>();
+
     @SuppressWarnings("unused")
     private UserEntity() {
         // Used by JPA
@@ -123,6 +129,13 @@ public class UserEntity implements User {
      */
     public Collection<Wish> getWishes() {
         return wishes;
+    }
+
+    /**
+     * @see org.carlosmecha.test.springsecurity.model.user.User#getRoles()
+     */
+    public Collection<Role> getRoles() {
+        return roles;
     }
 
     /**

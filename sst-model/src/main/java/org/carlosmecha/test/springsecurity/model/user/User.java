@@ -53,6 +53,13 @@ public interface User extends DatabaseEntity {
     public Collection<Wish> getWishes();
 
     /**
+     * Obtains the roles for this user.
+     * 
+     * @return Collection of roles.
+     */
+    public Collection<Role> getRoles();
+
+    /**
      * Changes the password.
      * 
      * @param password
