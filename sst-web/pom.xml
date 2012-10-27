@@ -5,7 +5,7 @@
     
 	<artifactId>springsecurity-test-web</artifactId>
 
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
     
 	<name>Spring Security Test web</name>
 	
@@ -21,8 +21,8 @@
     </parent>
     
 	<properties>
-		<org.aspectj-version>1.6.9</org.aspectj-version>
-		<org.slf4j-version>1.5.10</org.slf4j-version>
+		<org.aspectj.version>1.6.9</org.aspectj.version>
+		<org.slf4j.version>1.5.10</org.slf4j.version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -47,27 +47,29 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
+			<version>${org.aspectj.version}</version>
 		</dependency>	
 		
-		<!-- Logging -->
+		<!-- Logging facade -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${org.slf4j-version}</version>
+			<version>${org.slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${org.slf4j-version}</version>
+			<version>${org.slf4j.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>${org.slf4j-version}</version>
+			<version>${org.slf4j.version}</version>
 			<scope>runtime</scope>
 		</dependency>
+        
+        <!-- Logging implementation -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -123,7 +125,14 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
-		</dependency>        
+		</dependency>
+        
+        <!-- Model -->
+        <dependency>
+            <groupId>org.carlosmecha.test</groupId>
+            <artifactId>springsecurity-test-model</artifactId>
+        </dependency>
+        
 	</dependencies>
     <build>
         <plugins>
@@ -159,6 +168,31 @@
                 <version>1.2.1</version>
                 <configuration>
                     <mainClass>org.test.int1.Main</mainClass>
+                </configuration>
+            </plugin>
+            <!-- Tomcat deployment -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat6-maven-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <argLine>${sst.debug.arg} -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n</argLine>
+                    <url>${sst.container.deploy.url}</url>
+                    <server>${sst.container.credentials}</server>
+                    <path>/sst</path>
+                </configuration>
+            </plugin>
+            <!-- War file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>

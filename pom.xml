@@ -32,17 +32,22 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Logging -->
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>1.2.14</version>
             </dependency>
+            
+            <!-- Tests -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.7</version>
                 <scope>test</scope>
             </dependency>
+            
+            <!-- Spring -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
@@ -53,6 +58,13 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
                 <version>${spring.framework.version}</version>
+            </dependency>
+            
+            <!-- Model -->
+            <dependency>
+                <groupId>org.carlosmecha.test</groupId>
+                <artifactId>springsecurity-test-model</artifactId>
+                <version>0.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
