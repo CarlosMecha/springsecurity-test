@@ -8,6 +8,9 @@ import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.carlosmecha.test.springsecurity.model.user.Role;
+import org.carlosmecha.test.springsecurity.model.user.Role.RoleType;
+import org.carlosmecha.test.springsecurity.model.user.RoleEntity;
 import org.carlosmecha.test.springsecurity.model.user.User;
 import org.carlosmecha.test.springsecurity.model.user.UserEntity;
 import org.carlosmecha.test.springsecurity.model.wish.Wish;
@@ -117,6 +120,46 @@ public class AWishPersistenceTest {
                     "username", "Agapito").getSingleResult();
         assertEquals(1, other.getWishes().size());
         assertEquals(other, other.getWishes().iterator().next().getUser());
+
+        final Wish otherWish = entityManager.createNamedQuery("WishEntity.FIND_BY_ID", Wish.class)
+                .setParameter("id", other.getWishes().iterator().next().getId()).getSingleResult();
+        assertEquals(other.getWishes().iterator().next(), otherWish);
+
+    }
+
+    @Test
+    @Transactional
+    public void testSaveAndFindRoles() throws Exception {
+        final User u1 = new UserEntity("Agapito");
+        u1.setCreationDate(new Date());
+        u1.setPassword("Pass");
+
+        final User u2 = new UserEntity("Maria");
+        u2.setCreationDate(new Date());
+        u2.setPassword("pAss");
+
+        final Role common = new RoleEntity(u1, RoleType.COMMON);
+        new RoleEntity(u2, RoleType.ADMIN);
+
+        final Wish wish = new WishEntity(u1);
+        wish.setWish("Learn Spring...");
+
+        u1.getWishes().add(wish);
+
+        entityManager.persist(u1);
+        entityManager.persist(u2);
+        entityManager.flush();
+
+        // Otherwise the query returns the existing user.
+
+        entityManager.clear();
+        final User other = entityManager
+                .createNamedQuery("UserEntity.FIND_BY_USERNAME", User.class).setParameter(
+                    "username", "Agapito").getSingleResult();
+        assertEquals(1, other.getWishes().size());
+        assertEquals(other, other.getWishes().iterator().next().getUser());
+        assertEquals(1, other.getRoles().size());
+        assertEquals(common.getRole(), other.getRoles().iterator().next().getRole());
 
         final Wish otherWish = entityManager.createNamedQuery("WishEntity.FIND_BY_ID", Wish.class)
                 .setParameter("id", other.getWishes().iterator().next().getId()).getSingleResult();

@@ -8,6 +8,7 @@
         transaction-type="RESOURCE_LOCAL">
 
         <class>org.carlosmecha.test.springsecurity.model.user.UserEntity</class>
+        <class>org.carlosmecha.test.springsecurity.model.user.RoleEntity</class>
         <class>org.carlosmecha.test.springsecurity.model.wish.WishEntity</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 

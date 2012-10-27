@@ -66,13 +66,15 @@ public class RoleEntity implements Role {
      * Default constructor.
      * 
      * @param user
-     *            User assigned to this role.
+     *            User assigned to this role. This user will be set the new role into its list of
+     *            roles.
      * @param role
      *            Role type.
      */
     public RoleEntity(final User user, final RoleType role) {
         this.user = user;
         this.role = role;
+        this.user.getRoles().add(this);
     }
 
     @SuppressWarnings("unused")

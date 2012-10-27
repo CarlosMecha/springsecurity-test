@@ -71,12 +71,10 @@ ALTER TABLE ONLY sst.user_credentials ADD CONSTRAINT u_username UNIQUE (username
 --
 --
 
-CREATE TYPE user_role AS ENUM ('ADMIN', 'COMMON');
-
 CREATE TABLE sst.role (
     id bigint NOT NULL,
     user_id bigint NOT NULL,
-    role user_role 
+    role character varying CHECK (role = 'ADMIN' OR role = 'COMMON')
 );
 
 ALTER TABLE sst.role OWNER TO sst_user;
