@@ -6,6 +6,6 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
     
     <!-- Model configuration -->
-    <import resource="classpath:META-INF/spring/model-context.xml"/>
+    <!-- <import resource="classpath:/WEB-INF/spring/web-model-context.xml"/>  -->
 		
 </beans>
